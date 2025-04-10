@@ -12,13 +12,32 @@
   <div class="cc bg-digital-red pt-5 pb-1">
     <a class="logo text-white hocus:text-white text-20" href="https://libraries.stanford.edu">Stanford University</a>
   </div>
-  <div role="banner" class="cc rs-py-6 bg-gradient-to-b from-black to-plum text-white">
+  <div role="banner" class="cc rs-py-1 bg-gradient-to-b from-black to-plum text-white">
     <h1 class="splash-text">SUL Metadata AI Development</h1>
     <p class="intro-text">
      An experimental AI service for generating <a href="https://folio.stanford.edu/">FOLIO</a> Inventory 
      records from text prompts and image uploads.
     </p>
   </div>
+  <div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-1/2 rs-p-2">
+      <h2>Text Prompt</h2>
+      <form id="text-prompt-form">
+        <textarea id="text-prompt" rows="8" cols="40" placeholder="Enter your prompt here" class="textarea">
+        </textarea>
+        <button class="button" type="submit">Submit</button>
+      </form>
+    </div>
+    <div class="w-full md:w-1/2 rs-p-2">
+      <h2>Upload Cover Image</h2>
+      <form id="upload-cover-form">
+        <input type="file" class="input" id="cover-image" name="cover-image" accept="image/png,image/jpeg"></input>
 
+      </form>
+    </div>
+  </div>
+<footer class="cc basefont-20 rs-py-1 text-white bg-digital-red w-full">
+
+</footer>
 </body>
 </html>
