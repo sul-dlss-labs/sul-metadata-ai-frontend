@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUL Metadata AI Experiments</title>
   <link rel="stylesheet" href="./css/decanter.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
   <div class="cc bg-digital-red pt-5 pb-1">
@@ -24,7 +25,7 @@
       <form id="text-prompt-form">
         <textarea id="text-prompt" rows="8" cols="40" placeholder="Enter your prompt here" class="textarea">
         </textarea>
-        <button class="button" py-click="submit_prompt">Submit</button>
+        <button class="button" py-click="submit_prompt">Submit prompt</button>
       </form>
     </div>
     <div class="w-full md:w-1/2 rs-p-2">
@@ -35,6 +36,13 @@
         </p>
         <button class="button" py-click="upload_image">Submit Image</button>
       </form>
+    </div>
+  </div>
+  <div class="w-screen rs-py-2 px-20 bg-black-10 mb-40">
+    <h3>Configuration</h3>
+    <div class="btn-group" role="group" aria-label="Configuration">
+      <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#edge-ai-config">Edge-AI</button>
+      <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#folio-config">FOLIO Information</button>
     </div>
   </div>
 <footer class="cc basefont-20 rs-py-1 text-white bg-digital-red w-full">
@@ -60,6 +68,43 @@
     </div>
   </div>  
 </footer>
+<div class="modal" tabindex="-1" id="edge-ai-config">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edge-AI</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <label for="edge-ai-url">Edge AI URL</label>
+       <input class="input" id="edge-ai-url" type="text" value="https://sul-metadata-ai-dev.stanford.edu/edge-ai/">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="folio-config">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">FOLIO Environment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <label for="folio-url">FOLIO URL</label>
+       <input class="input" id="folio-url" type="text" value="https://folio-test.stanford.edu/">
+       <label for="folio-user">FOLIO User</label>
+       <input class="input" id="folio-user" type="text" value="app_libsys">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
 <script type="py" src="src/main.py"></script>
 </body>
