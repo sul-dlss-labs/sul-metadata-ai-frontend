@@ -22,20 +22,25 @@
   <div class="flex flex-col md:flex-row">
     <div class="w-full md:w-1/2 rs-p-2">
       <h2>Text Prompt</h2>
-      <form id="text-prompt-form">
         <textarea id="text-prompt" rows="8" cols="40" placeholder="Enter your prompt here" class="textarea">
         </textarea>
         <button class="button" py-click="submit_prompt">Submit prompt</button>
-      </form>
     </div>
     <div class="w-full md:w-1/2 rs-p-2">
       <h2>Upload Cover Image</h2>
-      <form id="upload-cover-form">
         <p>
           <input type="file" class="input" id="cover-image" name="cover-image" accept="image/png,image/jpeg"></input>
         </p>
         <button class="button" py-click="upload_image">Submit Image</button>
-      </form>
+    </div>
+  </div>
+  <div class="flex flex-col md:flex-row">
+    <div class="2-full md:w-1/2 rs-p-2">
+      <h2 class="d-none" id="instance-json-h2">Instance JSON</h2>
+      <pre id="instance-json" class="font-monospace fs-4"></pre>
+    </div>
+    <div class="2-full md:w-1/2 rs-p-2">
+     <div id="folio-result"></div>
     </div>
   </div>
   <div class="w-screen rs-py-2 px-20 bg-black-10 mb-40">
@@ -61,6 +66,11 @@
           <li class="sm:mr-10 md:mr-20 lg:mr-27">
             <a href="https://github.com/folio-labs/edge-ai" class="text-white no-underline hocus:underline hocus:text-white">
               Edge-AI Repository<span class="sr-only">(link is external)</span>
+            </a>
+          </li>
+          <li class="sm:mr-10 md:mr-20 lg:mr-27">
+            <a href="https://uit.stanford.edu/security/responsibleai" class="text-white no-underline hocus:underline hocus:text-white">
+              Responsible AI at Stanford<span class="sr-only">(link is external)</span>
             </a>
           </li>
         </ul>
@@ -106,6 +116,6 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
-<script type="py" src="src/main.py"></script>
+<script type="py" src="src/main.py" config='{"packages": [] }'></script>
 </body>
 </html>
