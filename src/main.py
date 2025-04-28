@@ -3,6 +3,7 @@
 import json
 
 from js import console, FormData
+from pyodide.http import pyfetch
 from pyscript import document, fetch
 
 
@@ -27,6 +28,9 @@ def _clear_fields():
 
     folio_status = document.querySelector("#folio-result")
     folio_status.innerHTML = ""
+
+    ai_messages_tbody = document.querySelector("#ai-messages")
+    ai_messages_tbody.innerHTML = ""
 
 
 def _generate_parts(parts: list):
@@ -81,12 +85,12 @@ def _messages(messages: list):
         ai_messages_tbody.appendChild(tr)
 
 
-def _model_usage(model_name: str, usage: dict):
+def _model_usage(usage: dict):
     card = document.querySelector("#ai-usage-card")
     model_name_subtitle = document.querySelector("#model-name")
     usage_list = document.querySelector("#ai-usage")
     usage_stats = usage["usage"]
-    model_name_subtitle.innerHTML = f"<em>Model:</em> {model_name}"
+    model_name_subtitle.innerHTML = f"<em>Model:</em> {usage['model_name']}"
     request_li = document.createElement("li")
     request_tokens_li = document.createElement("li")
     response_tokens_li = document.createElement("li")
@@ -117,6 +121,9 @@ def _model_usage(model_name: str, usage: dict):
 def display_instance_result(result):
     folio_inventory_div = document.querySelector("#folio-inventory-records")
     folio_inventory_div.classList.remove("d-none")
+    agent_result = document.querySelector("#ai-agent-result")
+    agent_result.classList.remove("d-none")
+
     instance_record = document.querySelector("#instance-json")
     instance_record.innerHTML = json.dumps(result.get("record"), indent=2)
     folio_status = document.querySelector("#folio-result")
@@ -125,10 +132,9 @@ def display_instance_result(result):
         folio_status.innerHTML = f"""<div class="alert alert-danger" role="alert">
 <h2 class="alert-heading">ERROR!</h2><p>{result['error']}</p>
 </div>"""
+        folio_inventory_div.classList.add("d-none")
+        agent_result.classList.add("d-none")
     else:
-        agent_result = document.querySelector("#ai-agent-result")
-        agent_result.classList.remove("d-none")
-
         folio_url_elem = document.querySelector("#folio-url")
         folio_instance_json_heading = document.querySelector("#folio-instance-h2")
         folio_instance_json = document.querySelector("#folio-instance-json")
@@ -144,7 +150,7 @@ def display_instance_result(result):
         if result["usage"] is None and result["ai_messages"] is None:
             console.log(f"Usage and AI Messages missing from response")
             return
-        _model_usage(result["model_name"], result["usage"])
+        _model_usage(result["usage"])
         _messages(result["usage"]["messages"])
 
 
@@ -170,6 +176,8 @@ async def submit_prompt(event):
 
 async def upload_image(event):
     """Submits book cover image to edge_ai to generate Inventory Instance"""
+    loading_spinner = document.querySelector("#load-spinner")
+    loading_spinner.classList.remove("d-none")
     _clear_fields()
     upload_image = document.querySelector("#cover-image")
 
@@ -180,14 +188,14 @@ async def upload_image(event):
 
     form_data.append("image", raw_image)
 
-    response = await fetch(
+    response = await pyfetch(
         f"{edge_ai.value}/inventory/instance/generate_from_image",
         method="POST",
         body=form_data,
     )
     result = await response.json()
     display_instance_result(result)
-    console.log(f"Image upload raw image {raw_image.size}")
+    loading_spinner.classList.add("d-none")
 
 
 async def toggle_messages(event):
