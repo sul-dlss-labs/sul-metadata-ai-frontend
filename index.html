@@ -34,13 +34,39 @@
         <button class="button" py-click="upload_image">Submit Image</button>
     </div>
   </div>
+  <div class="d-flex justify-content-center d-none" id="load-spinner">
+    <div class="spinner-grow text-info" role="status">
+     <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
   <div class="flex flex-col md:flex-row">
-    <div class="2-full md:w-1/2 rs-p-2">
-      <h2 class="d-none" id="instance-json-h2">Instance JSON</h2>
-      <pre id="instance-json" class="font-monospace fs-4"></pre>
+    <div class="2-full md:w-1/2 rs-p-2 d-none" id="json-records">
+      <h2 id="instance-json-h2">AI Generated Instance JSON</h2>
+      <pre id="instance-json" class="border border-dark-subtle bg-body-secondary p-2 font-monospace fs-4"></pre>
+      <hr>
+      <h2 id="folio-instance-h2">Returned FOLIO Instance JSON</h2>
+      <pre id="folio-instance-json" class="bg-body-secondary border border-dark-subtle p-2 font-monospace fs-4"></pre>
     </div>
     <div class="2-full md:w-1/2 rs-p-2">
      <div id="folio-result"></div>
+     <div class="card d-none" id="ai-usage-card">
+       <div class="card-body p-2">
+        <h5 class="card-title">Model Usage</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary" id="model-name"></h6>
+        <ul class="list-group list-group-flush" id="ai-usage"></ul>
+       </div>
+     </div>
+     <h2>Agent Messages</h2>
+     <table id="ai-messages-table" class="table d-none">
+       <thead>
+         <tr>
+           <th>Kind</th>
+           <th colspan="2">Parts</th>
+         </tr>
+       </thead>
+       <tbody id="ai-messages">
+       </tbody>
+     </table>
     </div>
   </div>
   <div class="w-screen rs-py-2 px-20 bg-black-10 mb-40">
@@ -87,7 +113,7 @@
       </div>
       <div class="modal-body">
        <label for="edge-ai-url">Edge AI URL</label>
-       <input class="input" id="edge-ai-url" type="text" value="https://sul-metadata-ai-dev.stanford.edu/edge-ai/">
+       <input class="input" id="edge-ai-url" type="text" value="https://sul-metadata-ai-dev.stanford.edu/edge_ai">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
