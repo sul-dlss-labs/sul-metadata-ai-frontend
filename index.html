@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="smooth-scroll">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,28 +37,40 @@
     <div class="spinner-grow text-info" role="status">
      <span class="visually-hidden">Loading...</span>
     </div>
+    <br>
+    <hr>
   </div>
-  <div class="flex flex-col md:flex-row">
-    <div class="2-full md:w-1/2 rs-p-2 d-none" id="json-records">
-      <h2 id="instance-json-h2">AI Generated Instance JSON</h2>
+  <div>&nbsp;</div>
+  <div id="folio-result" class="container"></div>
+  <div class="flex flex-col md:flex-row type-2 d-none" id="folio-inventory-records">
+    <div class="2-full md:w-1/2 rs-p-2">
+      <h2 id="instance-json-h2" class="fs-2">AI Generated Instance JSON</h2>
       <pre id="instance-json" class="border border-dark-subtle bg-body-secondary p-2 font-monospace fs-4"></pre>
-      <hr>
-      <h2 id="folio-instance-h2">Returned FOLIO Instance JSON</h2>
-      <pre id="folio-instance-json" class="bg-body-secondary border border-dark-subtle p-2 font-monospace fs-4"></pre>
     </div>
     <div class="2-full md:w-1/2 rs-p-2">
-     <div id="folio-result"></div>
-     <div class="card d-none" id="ai-usage-card">
+      <h2 id="folio-instance-h2" class="fs-2">Returned FOLIO Instance JSON</h2>
+      <pre id="folio-instance-json" class="bg-body-secondary border border-dark-subtle p-2 font-monospace fs-4"></pre>
+    </div>
+  </div>
+  <div class="flex flex-col md:flex-row type-3 d-none" id="ai-agent-result">
+    <div class="2-full md:w-1/2 rs-p-2">
+     <div class="card type-2" id="ai-usage-card">
        <div class="card-body p-2">
-        <h5 class="card-title">Model Usage</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary" id="model-name"></h6>
+        <h3 class="card-title fs-2">Model Usage</h3>
+        <h6 class="card-subtitle mb-2 text-body-secondary fs-3" id="model-name"></h6>
         <ul class="list-group list-group-flush" id="ai-usage"></ul>
        </div>
      </div>
-     <h2>Agent Messages</h2>
-     <table id="ai-messages-table" class="table d-none">
+    </div>
+    <div class="2-full md:w-1/2 rs-p-2">
+     <button class="btn btn-primary fs-2" py-click="toggle_messages">Show Agent Messages</button>
+    </div>
+  </div>
+  <div class="container d-none" id="ai-messages-table"> 
+     <h3 class="fs-1">Agent Message Log</h3>
+     <table class="table table-striped">
        <thead>
-         <tr>
+         <tr class="bg-primary">
            <th>Kind</th>
            <th colspan="2">Parts</th>
          </tr>
@@ -67,7 +78,6 @@
        <tbody id="ai-messages">
        </tbody>
      </table>
-    </div>
   </div>
   <div class="w-screen rs-py-2 px-20 bg-black-10 mb-40">
     <h3>Configuration</h3>
@@ -85,7 +95,7 @@
       <nav aria-label="global footer menu" class="flex flex-row sm:flex-col justify-center sm:items-center lg:items-start mb-10">
         <ul class="list-unstyled mb-10 sm:mb-4 mr-19 sm:mr-0 p-0 text-15 md:text-17 2xl:text-18 flex flex-col sm:flex-row">
           <li class="sm:mr-10 md:mr-20 lg:mr-27">
-            <a href="https://folio-test.stanford.edu/" class="text-white no-underline hocus:underline hocus:text-white">
+            <a href="https://folio-test.stanford.edu" class="text-white no-underline hocus:underline hocus:text-white">
               FOLIO Test<span class="sr-only">(link is external)</span>
             </a>
           </li>
@@ -130,7 +140,7 @@
       </div>
       <div class="modal-body">
        <label for="folio-url">FOLIO URL</label>
-       <input class="input" id="folio-url" type="text" value="https://folio-test.stanford.edu/">
+       <input class="input" id="folio-url" type="text" value="https://folio-test.stanford.edu">
        <label for="folio-user">FOLIO User</label>
        <input class="input" id="folio-user" type="text" value="app_libsys">
       </div>

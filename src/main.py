@@ -7,11 +7,11 @@ from pyscript import document, fetch
 
 
 def _clear_fields():
-    console.log("Clearing Fields")
+    record_div = document.querySelector("#folio-inventory-records")
+    record_div.classList.add("d-none")
+    ai_agent_result = document.querySelector("#ai-agent-result")
+    ai_agent_result.classList.add("d-none")
     instance_json_h2 = document.querySelector("#instance-json-h2")
-    instance_json_h2.classList.add("d-none")
-    card = document.querySelector("#ai-usage-card")
-    card.classList.add("d-none")
 
     model_name_subtitle = document.querySelector("#model-name")
     model_name_subtitle.value = ""
@@ -22,7 +22,6 @@ def _clear_fields():
     instance_record = document.querySelector("#instance-json")
     instance_record.innerHTML = ""
     folio_instance_json_heading = document.querySelector("#folio-instance-h2")
-    folio_instance_json_heading.classList.add("d-none")
     folio_instance_json = document.querySelector("#folio-instance-json")
     folio_instance_json.innerHTML = ""
 
@@ -71,7 +70,6 @@ def _messages(messages: list):
     ai_messages_table = document.querySelector("#ai-messages-table")
     ai_messages_tbody = document.querySelector("#ai-messages")
 
-    ai_messages_table.classList.remove("d-none")
     for message in messages:
         tr = document.createElement("tr")
         kind_td = document.createElement("td")
@@ -80,7 +78,6 @@ def _messages(messages: list):
         parts_td = document.createElement("td")
         parts_td.appendChild(_generate_parts(message.get("parts", [])))
         tr.appendChild(parts_td)
-        console.log(parts_td, tr)
         ai_messages_tbody.appendChild(tr)
 
 
@@ -89,7 +86,6 @@ def _model_usage(model_name: str, usage: dict):
     model_name_subtitle = document.querySelector("#model-name")
     usage_list = document.querySelector("#ai-usage")
     usage_stats = usage["usage"]
-    card.classList.remove("d-none")
     model_name_subtitle.innerHTML = f"<em>Model:</em> {model_name}"
     request_li = document.createElement("li")
     request_tokens_li = document.createElement("li")
@@ -119,11 +115,10 @@ def _model_usage(model_name: str, usage: dict):
 
 
 def display_instance_result(result):
-
+    folio_inventory_div = document.querySelector("#folio-inventory-records")
+    folio_inventory_div.classList.remove("d-none")
     instance_record = document.querySelector("#instance-json")
-    instance_record_heading = document.querySelector("#instance-json-h2")
     instance_record.innerHTML = json.dumps(result.get("record"), indent=2)
-    instance_record_heading.classList.remove("d-none")
     folio_status = document.querySelector("#folio-result")
 
     if "error" in result:
@@ -131,9 +126,10 @@ def display_instance_result(result):
 <h2 class="alert-heading">ERROR!</h2><p>{result['error']}</p>
 </div>"""
     else:
+        agent_result = document.querySelector("#ai-agent-result")
+        agent_result.classList.remove("d-none")
+
         folio_url_elem = document.querySelector("#folio-url")
-        json_recs = document.querySelector("#json-records")
-        json_recs.classList.remove("d-none")
         folio_instance_json_heading = document.querySelector("#folio-instance-h2")
         folio_instance_json = document.querySelector("#folio-instance-json")
         folio_instance_json.innerHTML = json.dumps(
@@ -143,8 +139,8 @@ def display_instance_result(result):
         instance_url = (
             f"{folio_url_elem.value}/inventory/view/{result['folio_response']['id']}"
         )
-        folio_status.innerHTML = f"""<h2 class="text-success align-middle">Success!</h2>
-            <a href="{instance_url}">{instance_url}</a>"""
+        folio_status.innerHTML = f"""<h2 class="text-success align-middle fs-1">Success!</h2>
+            <a href="{instance_url}" class="fs-2">{instance_url}</a>"""
         if result["usage"] is None and result["ai_messages"] is None:
             console.log(f"Usage and AI Messages missing from response")
             return
@@ -192,3 +188,13 @@ async def upload_image(event):
     result = await response.json()
     display_instance_result(result)
     console.log(f"Image upload raw image {raw_image.size}")
+
+
+async def toggle_messages(event):
+    message_div = document.querySelector("#ai-messages-table")
+    if "d-none" in message_div.classList:
+        event.target.innerHTML = "Hide Agent Messages"
+        message_div.classList.remove("d-none")
+    else:
+        event.target.innerHTML = "Show Agent Messages"
+        message_div.classList.add("d-none")
