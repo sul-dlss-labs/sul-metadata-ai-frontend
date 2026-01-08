@@ -99,40 +99,6 @@ def _messages(messages: list):
         tr.appendChild(usage_td)
         ai_messages_tbody.appendChild(tr)
 
-
-def _model_usage(usage: dict):
-    card = document.querySelector("#ai-usage-card")
-    model_name_subtitle = document.querySelector("#model-name")
-    usage_list = document.querySelector("#ai-usage")
-    usage_stats = usage["usage"]
-    model_name_subtitle.innerHTML = f"<em>Model:</em> {usage['model_name']}"
-    request_li = document.createElement("li")
-    request_tokens_li = document.createElement("li")
-    response_tokens_li = document.createElement("li")
-    total_tokens_li = document.createElement("li")
-
-    request_li.innerHTML = (
-        f"<strong>Requests:</strong> {usage_stats.get('requests', -1) }"
-    )
-    request_li.classList.add("list-group-item")
-    usage_list.appendChild(request_li)
-    request_tokens_li.innerHTML = (
-        f"<strong>Request tokens:</strong> {usage_stats.get('request_tokens', -1):,}"
-    )
-    request_tokens_li.classList.add("list-group-item")
-    usage_list.appendChild(request_tokens_li)
-    response_tokens_li.innerHTML = (
-        f"<strong>Response tokens:</strong> {usage_stats.get('response_tokens', -1):,}"
-    )
-    response_tokens_li.classList.add("list-group-item")
-    usage_list.appendChild(response_tokens_li)
-    total_tokens_li.innerHTML = (
-        f"<strong>Total tokens:</strong> {usage_stats.get('total_tokens', -1):,}"
-    )
-    total_tokens_li.classList.add("list-group-item")
-    usage_list.appendChild(total_tokens_li)
-
-
 def display_instance_result(result):
     folio_inventory_div = document.querySelector("#folio-inventory-records")
     folio_inventory_div.classList.remove("d-none")
@@ -165,7 +131,6 @@ def display_instance_result(result):
         if result["usage"] is None and result["ai_messages"] is None:
             console.log(f"Usage and AI Messages missing from response")
             return
-        #_model_usage(result["usage"])
         _messages(result["usage"]["messages"])
 
 
