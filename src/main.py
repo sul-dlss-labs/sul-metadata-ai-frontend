@@ -82,6 +82,21 @@ def _messages(messages: list):
         parts_td = document.createElement("td")
         parts_td.appendChild(_generate_parts(message.get("parts", [])))
         tr.appendChild(parts_td)
+        usage_td = document.createElement("td")
+        if "usage" in message:
+            usage_ul = document.createElement("ul")
+            input_li = document.createElement("li")
+            input_li.innerHTML = (
+                f"<strong>Input Tokens</strong>: {message['usage']['input_tokens']}"
+            )
+            usage_ul.appendChild(input_li)
+            output_li = document.createElement("li")
+            output_li.innerHTML = (
+                f"<strong>Output Tokens</strong>: {message['usage']['output_tokens']}"
+            )
+            usage_ul.appendChild(output_li)
+            usage_td.appendChild(usage_ul)
+        tr.appendChild(usage_td)
         ai_messages_tbody.appendChild(tr)
 
 
@@ -150,7 +165,7 @@ def display_instance_result(result):
         if result["usage"] is None and result["ai_messages"] is None:
             console.log(f"Usage and AI Messages missing from response")
             return
-        _model_usage(result["usage"])
+        #_model_usage(result["usage"])
         _messages(result["usage"]["messages"])
 
 
